@@ -41,7 +41,9 @@ app.use(async (ctx, next) => {
 	}
 	return next();
 });
-
+app.on("error",(err,ctx)=>{
+  console.log(err,ctx)
+});
 // 加载路由中间件
 app.use(router.routes());
 // 监听端口
