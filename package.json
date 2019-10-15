@@ -6,7 +6,7 @@
     "start": "node bin/www",
     "server": "node --trace-deprecation server.js",
     "chat:http": "set port=3030 && node --trace-deprecation server.js",
-    "chat:linux": "export port=3030 && node --trace-deprecation server.js"
+    "chat:linux": "export port=8086 && node --trace-deprecation server.js"
   },
   "dependencies": {
     "ejs": "^2.6.1",

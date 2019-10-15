@@ -25,18 +25,19 @@ app.proxy = true;
 app.use(async (ctx, next) => {
 	//以api开头的异步请求接口都会被转发
 	//console.log(ctx.header.host)
-	//react-loadable打包后js组件拆分，访问根目录下
-	if (ctx.url.endsWith('.js') && reg.test(ctx.url)) {
+	//部分资源单独处理，打包后js拆分，默认访问根目录下
+	if ((ctx.url.endsWith('.js') && reg.test(ctx.url)) || (ctx.url.endsWith('.jpg') || ctx.url.endsWith('.png'))) {
 		//console.log(ctx.url)
+		//ctx.url.endsWith('.jpg') || ctx.url.endsWith('.png')处理图片
 		ctx.respond = false; // 绕过koa内置对象response ，写入原始res对象，而不是koa处理过的response
 		return proxy({
-			target: 'http://'+ctx.header.host, // 服务器地址
-            changeOrigin: true,
-            secure: false,
-            pathRewrite: {
-                '^/': '/public/build/'
-            }
-        })(ctx.req, ctx.res, next)
+			target: 'http://' + ctx.header.host, //服务器地址
+			changeOrigin: true,
+			secure: false,
+			pathRewrite: {
+				'^/': '/public/build/'
+			}
+		})(ctx.req, ctx.res, next)
 	}
 	return next();
 });
@@ -46,5 +47,6 @@ app.use(router.routes());
 // 监听端口
 app.listen(port, () => {
 	console.log('Server listening at port %d', port);
+	console.log('Visit http://127.0.0.1:%d', port);
 	console.log('Hello, I\'m %s, how can I help?', serverName);
 });
