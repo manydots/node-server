@@ -6,7 +6,7 @@ const canVisit = [{
 	title: '首页',
 	source: 'index'
 }, {
-	path: '/test',
+	path: '/testing',
 	pageType: 'index',
 	title: '测试',
 	source: 'index'
